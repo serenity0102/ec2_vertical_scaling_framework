@@ -1,6 +1,10 @@
 
 # Welcome to EC2 vertical scaling framework
 
+Modern applications typically use horizontal scaling on the cloud to handle traffic fluctuations, such as using Auto Scaling Groups (ASG) on AWS EC2. However, some applications still need to be deployed on a single machine due to special requirements or pending modernization efforts. When traffic changes, these applications can only perform vertical scaling, which means increasing or decreasing the computing resources of a single machine. For example, to ensure fairness, some trading matching engines typically run on a single machine. Additionally, some legacy applications that have not yet been modernized can only run on a single machine before the modernization is complete. To better leverage the elasticity and automation capabilities of cloud services, vertical scaling is essential, allowing these applications to dynamically adjust resources based on actual needs and improve cost-effectiveness.
+
+This framework provides a prototyping to implement automated elastic vertical scaling for AWS EC2 instances, enabling applications deployed on a single machine to enjoy the flexibility and cost-effectiveness of cloud resources. Through automated vertical scaling, you can dynamically adjust the computing resources of a single EC2 instance based on the actual needs of your application, optimizing resource utilization and cost-effectiveness.
+
 ## Prerequisite
 
 We assume that 
