@@ -8,16 +8,6 @@ We assume that
 * we'll use private API gateway. You should already have a VPC endpoint for API Gateway in your VPC. 
 * we'll send EC2 vertifical scaling notification to a SNS topic. You should aleady have an SNS topic to receive notification. Please put the SNS topic ARN into the context.json. 
 
-After download the code, 
-You should have following parameters in the context in cdk.json file:
-    "instance_id": "i-ec21234567890",
-    "cpu_threshold_upsize": "0.9",
-    "mem_threshold_upsize": "0.9",
-    "cpu_threshold_downsize": "0.4",
-    "mem_threshold_downsize": "0.4",
-    "sns_topic_arn": "arn:aws:sns:ap-east-1:123456789012:ec2_notification_topic",
-    "resize_time_zone": "Asia/Shanghai",
-
 
 ## Architecture
 
@@ -72,15 +62,32 @@ CPU Scaling Up | R to M series; M to C series; Larger size for C series | R to M
 For security purpose, we use private API gateway here, so that only your company intranet could trigger the EC2 resize. You need to Create a VPC endpoint for API Gateway in your VPC to access the API gateway. Please refer more: https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-api-create.html. 
 
 
-## Notes
+## Usage
 
-    "instance_id": "i-0a12135a00ace182c",
-    "cpu_threshold_upsize": "0.9",
-    "mem_threshold_upsize": "0.9",
-    "cpu_threshold_downsize": "0.4",
-    "mem_threshold_downsize": "0.4",
-    "sns_topic_arn": "arn:aws:sns:ap-east-1:383386985941:ec2_vscalling_inform",
-    "resize_time_zone": "Asia/Hong_Kong",
+After download the code, you should update following parameters in the context in the cdk.json file, such as:
+```
+"context": {
+  "instance_id": "i-ec20987654321",
+  "cpu_threshold_upsize": "0.9",
+  "mem_threshold_upsize": "0.9",
+  "cpu_threshold_downsize": "0.4",
+  "mem_threshold_downsize": "0.4",
+  "sns_topic_arn": "arn:aws:sns:ap-east-1:123456789012:ec2_notification_topic",
+  "resize_time_zone": "Asia/Hong_Kong"
+}
+```
+
+Then you can run `cdk` commands to deploy the framework:
+```
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install --upgrade pip
+pip3 install -r requirements.txt
+cdk bootstrap
+cdk deploy
+```
+
+## Notes
 
 * We only check one EC2 instance in the framework. You can adjust the code to check a group of EC2 instances.
 
