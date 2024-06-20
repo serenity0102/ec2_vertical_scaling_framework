@@ -109,7 +109,7 @@ The Lambda behind the API Gateway will create a scheduler according to the datet
 
 ## Clean up
 
-If you want to delete all stacks created by this CDK app, you can delete the stack `Ec2VerticalScalingFrameworkStack` in CloudFormation or run the command below in your Cloud9 project path:
+If you want to delete all stacks created by this CDK app, you can delete the stack `Ec2VerticalScalingFrameworkStack` in CloudFormation or run the command below:
 ```
 cdk destroy Ec2VerticalScalingFrameworkStack
 ```
