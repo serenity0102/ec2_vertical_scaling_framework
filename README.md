@@ -91,6 +91,22 @@ cdk bootstrap
 cdk deploy
 ```
 
+After deployment, you will create a weekly scheduler to check EC2 usage.
+![EC2-check](docs/ec2-weekly-check.jpg)
+
+If there is any scaling up/down detected, it will send out email as below. You can change the email template in the Lambda function [ec2-vertical-scale-check.py](ec2_vertical_scaling_framework/lambda/ec2-check/ec2-vertical-scale-check.py)
+![EC2-check-notice](docs/ec2-resize-notice.jpg)
+
+You can update the datetime `YYYY-MM-DDThh:mm:00` of the URL in the email, and run it in your browser. Suppose the browser is in intranet and can reach the private API Gateway.
+```
+https://abcdefg.execute-api.ap-east-1.amazonaws.com/prod/resize?instanceId=i-123456789012&targetInstanceType=m5.xlarge&datetime=YYYY-MM-DDThh:mm:00
+```
+
+The Lambda behind the API Gateway will create a scheduler according to the datetime `YYYY-MM-DDThh:mm:00`. Following is the example of setting to the datetime `2024-06-20T13:30:00`. Then at `2024-06-20T13:30:00`, the EC2 will be resized to the target size `m5.xlarge`.
+![EC2-scheduler](docs/ec2-scheduler.png)
+
+
+
 ## Clean up
 
 If you want to delete all stacks created by this CDK app, you can delete the stack `Ec2VerticalScalingFrameworkStack` in CloudFormation or run the command below in your Cloud9 project path:
