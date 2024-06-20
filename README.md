@@ -36,9 +36,7 @@ Here are the introduction of key components.
 ### Amazon CloudWatch 
 CloudWatch is an excellent monitoring tool for AWS EC2 instances. It allows you to view the CPU utilization for each EC2 instance. If you have installed the CloudWatch Agent on your EC2 instances, you can also publish metrics such as memory and disk utilization to CloudWatch for monitoring. 
 
-Here is an example of monitoring EC2 CPU and memory usage to determine whether to scale resources up or down.
-
-The sentence and table describe an example of monitoring EC2 CPU and memory usage to determine whether to scale resources up or down.
+Here is an example of monitoring EC2 CPU and memory usage to determine whether to scale resources up or down based on certain threshold.
 
 Scaling Metric | Metric Name | Action Logic
 --- | --- | ---
