@@ -4,17 +4,18 @@
 ## Prerequisite
 
 We assume that 
-* you already install CloudWatch agent on your EC2, so that we could featch the mem_used_percent metric in CloudWatch for scaling decision making. 
-* you aleady have an SNS policy to receive notification. Please put the SNS topic ARN into the context.json. For example
-* you already have a VPC endpoint for API Gateway in your VPC. 
+* you should already install CloudWatch agent on your EC2, so that we could featch the mem_used_percent metric in CloudWatch for scaling decision making. 
+* we'll use private API gateway. You should already have a VPC endpoint for API Gateway in your VPC. 
+* we'll send EC2 vertifical scaling notification to a SNS topic. You should aleady have an SNS topic to receive notification. Please put the SNS topic ARN into the context.json. 
 
+After download the code, 
 You should have following parameters in the context in cdk.json file:
-    "instance_id": "i-0a12135a00ace182c",
+    "instance_id": "i-ec21234567890",
     "cpu_threshold_upsize": "0.9",
     "mem_threshold_upsize": "0.9",
     "cpu_threshold_downsize": "0.4",
     "mem_threshold_downsize": "0.4",
-    "sns_topic_arn": "arn:aws:sns:ap-east-1:383386985941:ec2_vscalling_inform",
+    "sns_topic_arn": "arn:aws:sns:ap-east-1:123456789012:ec2_notification_topic",
     "resize_time_zone": "Asia/Shanghai",
 
 
@@ -72,6 +73,14 @@ For security purpose, we use private API gateway here, so that only your company
 
 
 ## Notes
+
+    "instance_id": "i-0a12135a00ace182c",
+    "cpu_threshold_upsize": "0.9",
+    "mem_threshold_upsize": "0.9",
+    "cpu_threshold_downsize": "0.4",
+    "mem_threshold_downsize": "0.4",
+    "sns_topic_arn": "arn:aws:sns:ap-east-1:383386985941:ec2_vscalling_inform",
+    "resize_time_zone": "Asia/Hong_Kong",
 
 * We only check one EC2 instance in the framework. You can adjust the code to check a group of EC2 instances.
 
