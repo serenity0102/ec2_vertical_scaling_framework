@@ -62,7 +62,7 @@ CPU Scaling Up | R to M series; M to C series; Larger size for C series | R to M
 For security purpose, we use private API gateway here, so that only your company intranet could trigger the EC2 resize. You need to Create a VPC endpoint for API Gateway in your VPC to access the API gateway. Please refer more: https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-api-create.html. 
 
 
-## Usage
+## Getting Started
 
 After download the code, you should update following parameters in the context in the cdk.json file, such as:
 ```
@@ -86,6 +86,14 @@ pip3 install -r requirements.txt
 cdk bootstrap
 cdk deploy
 ```
+
+## Clean up
+
+If you want to delete all stacks created by this CDK app, you can delete the stack `Ec2VerticalScalingFrameworkStack` in CloudFormation or run the command below in your Cloud9 project path:
+```
+cdk destroy Ec2VerticalScalingFrameworkStack
+```
+
 
 ## Notes
 
