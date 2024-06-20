@@ -1,0 +1,25 @@
+*.swp
+package-lock.json
+__pycache__
+.pytest_cache
+.venv
+*.egg-info
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+
+# Ignore CDK context directory
+cdk.context.json
+
+# Ignore AWS Toolkit directory
+.aws-sam/
+
+# Ignore Node.js dependencies
+node_modules/
+
+# Ignore other generated files or directories
+*.js
+*.d.ts
+dist/
