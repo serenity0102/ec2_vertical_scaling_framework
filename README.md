@@ -117,7 +117,9 @@ cdk destroy Ec2VerticalScalingFrameworkStack
 
 * We only check one EC2 instance in the framework. You can adjust the code to check a group of EC2 instances.
 
-* this is only a prototyping. If you want to make it production, you need to consider the situation such as the resize schedule URL is triggered multiple times with different datetime, how do you avoid resizing duplicately. 
+* this is only a prototyping. If you want to make it production, you need to consider the situation such as the resize schedule URL is triggered multiple times with different datetime, how do you avoid resizing duplicately.
+
+* Please adjust and use least priviledge in the IAM role permissions.
 
 
 Enjoy!
