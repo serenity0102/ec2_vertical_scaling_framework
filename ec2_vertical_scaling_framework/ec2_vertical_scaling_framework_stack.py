@@ -9,6 +9,7 @@ from aws_cdk import (
     aws_events_targets as targets,
     aws_apigateway as apigateway,
     aws_scheduler as scheduler,
+    aws_logs as logs,
     Duration,
 )
 from constructs import Construct
@@ -61,7 +62,7 @@ class Ec2VerticalScalingFrameworkStack(Stack):
         ec2_resize_lambda = lambda_.Function(
             self, "EC2Resize",
             code=lambda_.Code.from_asset("ec2_vertical_scaling_framework/lambda/ec2-resize"),
-            runtime=lambda_.Runtime.PYTHON_3_9,
+            runtime=lambda_.Runtime.PYTHON_3_12,
             handler="ec2-resize.lambda_handler",
             role=EC2ResizeRole,
             timeout=Duration.seconds(60),
@@ -81,7 +82,7 @@ class Ec2VerticalScalingFrameworkStack(Stack):
         ec2_scheduler_resize_lambda = lambda_.Function(
             self, "EC2SchedulerResize",
             code=lambda_.Code.from_asset("ec2_vertical_scaling_framework/lambda/ec2-scheduler"),
-            runtime=lambda_.Runtime.PYTHON_3_9,
+            runtime=lambda_.Runtime.PYTHON_3_12,
             handler="ec2-scheduler-resize.lambda_handler",
             role=ec2_scheduler_resize_lambda_role,
             environment={
@@ -96,6 +97,9 @@ class Ec2VerticalScalingFrameworkStack(Stack):
         #
         # Create the API Gateway EC2SchedulerResizeAPI to create a resize scheduler
         #
+        log_group = logs.LogGroup(self, "Ec2AutoScalingApiGatewayAccessLogs",
+            retention=logs.RetentionDays.ONE_WEEK  # Adjust retention as needed
+        )
         policy_statement = iam.PolicyStatement(
             effect=iam.Effect.ALLOW,
             principals=[iam.AnyPrincipal()],  # Allow all principals
@@ -110,6 +114,8 @@ class Ec2VerticalScalingFrameworkStack(Stack):
                 data_trace_enabled=True,
                 logging_level=apigateway.MethodLoggingLevel.INFO,
                 metrics_enabled=True,
+                access_log_destination=apigateway.LogGroupLogDestination(log_group),
+                access_log_format=apigateway.AccessLogFormat.clf() 
             ),
             policy=policy_document 
         )
@@ -158,7 +164,7 @@ class Ec2VerticalScalingFrameworkStack(Stack):
         vertical_scale_check_lambda = lambda_.Function(
             self, "EC2VerticalScaleCheck",
             code=lambda_.Code.from_asset("ec2_vertical_scaling_framework/lambda/ec2-check"),
-            runtime=lambda_.Runtime.PYTHON_3_9,
+            runtime=lambda_.Runtime.PYTHON_3_12,
             handler="ec2-vertical-scale-check.lambda_handler",
             timeout=Duration.seconds(60),
             environment={
