@@ -47,7 +47,15 @@ cdk_nag.NagSuppressions.add_stack_suppressions(
         cdk_nag.NagPackSuppression(
             id="AwsSolutions-COG4",
             reason="This endpoint is private and does not require Cognito user pool authorizer",
-        )
+        ),
+        cdk_nag.NagPackSuppression(
+            id="AwsSolutions-IAM4",
+            reason="Default role created by CDK LogRetention and BucketNotificationsHandler ",
+        ),
+        cdk_nag.NagPackSuppression(
+            id="AwsSolutions-IAM5",
+            reason="Use case allows for wildcard actions",
+        ),
     ],
 )
 Aspects.of(app).add(cdk_nag.AwsSolutionsChecks())
